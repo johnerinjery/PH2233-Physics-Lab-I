@@ -14,13 +14,13 @@ Temperature is measured by using resistance as a proxy. As resistance $R := V/I$
 
 ## Flow of the program
 
-1. Define all constants as given in LM. Only measured quantitites are voltage (V) and current (I). Store the measurements in corresponding arrays. The first value in both arrays must correspond to the "Glowing Temperature" measurement. The variables dV and dA are the least counts (uncertainities) in voltage and current, respectively.
+1. Define all constants as given in LM. Only measured quantities are voltage (V) and current (I). Store the measurements in corresponding arrays. The first value in both arrays must correspond to the "Glowing Temperature" measurement. The variables dV and dA are the least counts (uncertainties) in voltage and current, respectively.
 
-2. Calculate mean resistance $R$, and uncertainity in resistance $dR$. $R_{0}$ is calculated using the zero index values from V, I, and using $T_{G} = 800K$ (Glowing temperature of Tungsten)
+2. Calculate mean resistance $R$, and uncertainty in resistance $dR$. $R_{0}$ is calculated using the zero index values from V, I, and using $T_{G} = 800K$ (Glowing temperature of Tungsten)
 
-3. Calculating temperature and its uncertainity involves solving the quadratic in T for every value of resistance calculated. We do this using the SciPy function <a href="https://docs.scipy.org/doc/scipy-1.16.2/reference/generated/scipy.optimize.bisect.html">`scipy.optimize.bisect`</a>. We solve for T using R for mean value of T. Then we measure $T_{m}:=T(R+dR)$ and $T_{p}:=T(R-dR)$ and average them to calculate uncertainity in temperature $\delta T:= \frac{T_{p} - T_{m}}{2}$
+3. Calculating temperature and its uncertainty involves solving the quadratic in T for every value of resistance calculated. We do this using the SciPy function <a href="https://docs.scipy.org/doc/scipy-1.16.2/reference/generated/scipy.optimize.bisect.html">`scipy.optimize.bisect`</a>. We solve for T using R for mean value of T. Then we measure $T_{m}:=T(R+dR)$ and $T_{p}:=T(R-dR)$ and average them to calculate uncertainty in temperature $\delta T:= \frac{T_{p} - T_{m}}{2}$
 
-4. Then it is straight forward calculation of power and its uncertainity, plotting graphs with error bars, and saving data.
+4. Then it is straight forward calculation of power and its uncertainty, plotting graphs with error bars, and saving data.
 
 ## Notes
 
@@ -30,4 +30,4 @@ $$
 \delta A = A \sqrt{\left(\frac{\delta B}{B}\right)^2 + \left(\frac{\delta C}{C}\right)^2}
 $$
 
-and the uncertainity in temperature is calculated as described previously.
+and the uncertainty in temperature is calculated as described previously.
