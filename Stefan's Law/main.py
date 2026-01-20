@@ -72,7 +72,7 @@ plt.plot(
 
 plt.xlabel(r"$\log T$")
 plt.ylabel(r"$\log P$")
-plt.legend()
+plt.legend(loc="lower right")
 plt.show()
 
 print(f"Slope = {slope:.2f}")
