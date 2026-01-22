@@ -2,22 +2,45 @@
 PH2233 Physics Lab II — January 2026
 Code used in lab for Brewster Angle experiment.
 Refer Pg. 1 in the Lab Manual (LM)
-
-P.S There really is no need to use a Python script for this experiment
-as it can easily be done on software like Excel. I am including this j
-ust for the sake of completeness.
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
 
-theta_b = np.array([...])
-theta_b = np.deg2rad(theta_b)
+angle = np.array([36, 34, 32, 30, 28, 26, 24])
+intensity1 = np.array([47, 26, 24, 2.5, 21, 44, 60])
+intensity2 = np.array([44, 37, 23, 2.7, 22, 37, 69])
+intensity3 = np.array([41.5, 27, 20, 2.7, 25, 37, 60])
 
-mean_theta = theta_b.mean()
-std = theta_b.std(ddof=1)
-std_mean = std / np.sqrt(len(theta_b))
+intensities = np.vstack([intensity1, intensity2, intensity3])
 
-n = np.tan(mean_theta)
-n_err = (1 / np.cos(mean_theta) ** 2) * std_mean
+I_mean = np.mean(intensities, axis=0)
+I_std = np.std(intensities, axis=0, ddof=1)
+I_err = I_std / np.sqrt(3)
 
-print(f"Refractive Index: {n:.2f}\nUncertainty: {n_err:.2f}")
+# Quadratic weighted fit
+coeffs = np.polyfit(angle, I_mean, 2, w=1 / I_err)
+p = np.poly1d(coeffs)
+xfit = np.linspace(angle.min(), angle.max(), 300)
+yfit = p(xfit)
+
+# Plots
+fig, ax = plt.subplots()
+
+ax.errorbar(
+    angle,
+    I_mean,
+    yerr=I_err,
+    fmt="o",
+    capsize=4,
+    zorder=3,
+    label="Mean intensity ± SEM",
+)
+
+ax.plot(xfit, yfit, label="Weighted quadratic fit")
+
+ax.set_xlabel("Angle (degrees)")
+ax.set_ylabel("Intensity (mico amp)")
+ax.grid()
+ax.legend()
+plt.show()
